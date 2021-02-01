@@ -1,34 +1,22 @@
-# Fall 2020 PA 04 - Flight Planner 
+# Flight Planner
 
-## Important Information
+This is a programming assignment for SMU's CS 2341 (Data Structures) class. 
 
-Project handout:  [Click Here](https://drive.google.com/file/d/1lEFdwiFRgI_5ZH0uhJCJEEJw4yJH_LlT/view?usp=sharing)
+It is a flight planner that takes in two input files: one for flights between cities and one for requested flight paths. Example input files are below:
 
-## Input and Output Files
+`Dallas|Austin|98|47|Spirit`
+`Dallas|Austin|98|59|American`
+`Austin|Houston|95|39|United`
+`Dallas|Houston|101|51|Spirit`
+`Austin|Chicago|144|192|American`
 
-As you begin using input files and output files with this project, 
-you'll need to modify the `CMakeLists.txt` file and the `.github/workflows/build.yaml`
-files.  
+The program uses this input to create Flight objects, containing the origin and destination cities, flight cost, and flight time. The flight objects are used to populate an adjacency list.
 
-Place any input files in the folder that contains your source code.  When your project is built, it will be copied into the build directory by CMake. 
+`Dallas|Houston|T`
+`Chicago|Dallas|C`
 
-- `CMakeLists.txt`
-    - Open it and look for the commented section (with `#` signs).  Edit the `set(input01 "")` etc.
-    based upon how many files you need.
-    - there should be one `set(...)` statement per input file
-    - you DO NOT need to list output files in `CmakeLists.txt`.
-    
-- `.github/workflows/build.yaml`
-    - Open this file and look for the `INPUT_FILES:` command near the top.
-    - List the input file names in the order they should be sent to argv of main. 
-    - OUTPUT file need to be listed here as well in the `OUTPUT_FILES:` section. 
-    - For example:
-        ```yaml
-        INPUT_FILES: input01.txt
-        OUTPUT_FILES: output.txt
-        ```
-      would be equivalent to the following execution command:
-      ```yaml
-      ./executableName input01.txt output.txt
-      ```   
+Request objects are created from this input file. For example, the first request is asking the program to find all paths from Dallas to Houston, then order them in ascending order of lowest time taken. 
 
+Once all the requests are created, the program will iterate through each request. Iterative backtracking (implemented with a stack) exhausts all possible paths from origin to destination by traversing the adjacency list. If a path between two cities is found, a Path object is created that stores all flights taken, total costs, and total time. Finally, all paths are sorted and the top three are printed to the terminal.
+
+The Catch2 test-driven development framework was used to develop all classes. Extensive testing was done to ensure that everything worked as intended before implementing the iterative backtracking solution.
